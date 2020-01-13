@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
+
+public class SceneChange : MonoBehaviour
+{
+    public Canvas canvas;// Start is called before the first frame update
+
+    void Start()
+    {
+        canvas.gameObject.SetActive(false);
+    }
+
+
+
+    private void OnTriggerEnter(Collider col)
+    {
+
+        if (col.tag == "Player")
+        {
+            canvas.gameObject.SetActive(true);
+        }
+
+    }
+
+    private void OnTriggerExit(Collider col)
+
+    {
+        if (col.tag == "Player")
+
+        {
+            canvas.gameObject.SetActive(false);
+        }
+    }
+
+
+
+    public void Change()
+
+    {
+        SceneManager.LoadScene("SecondScene");
+    }
+    public void Back()
+    {
+        SceneManager.LoadScene("FristScene");
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene("Restart");
+    }
+
+    public void start()
+    {
+        SceneManager.LoadScene("start");
+    }
+}
