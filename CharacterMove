@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CharacterMove : MonoBehaviour
+{
+    public float speed;
+    public float jumpPower;
+    public float rotateSpeed;
+    float h;
+    float v;
+    bool isJumping;
+    Rigidbody rd;
+    Vector3 movement;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        rd = GetComponent<Rigidbody>();
+    }
+    void Update()
+    {
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isJumping = true;
+        }
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        Move();
+        Turn();
+        Jump();
+
+    }
+    void Move()
+    {
+        movement.Set(h, 0f, v);
+        movement = movement.normalized * speed * Time.deltaTime;
+        rd.MovePosition(transform.position + movement);
+
+    }
+    void Turn()
+    {
+        if (h == 0 && v == 0)
+            return;
+        Quaternion newRotation = Quaternion.LookRotation(movement);
+        rd.rotation = Quaternion.Slerp(rd.rotation, newRotation, rotateSpeed * Time.deltaTime);
+    }
+
+    void Jump()
+    {
+        if (!isJumping)
+            return;
+        rd.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        isJumping = false;
+    }
+
+
+}
