@@ -1,0 +1,64 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DoorOpener : MonoBehaviour {
+// 문을 여는것 같은 효과인데(물체의 앞에 플레이어가 있으면 물체가 지정지점으로 서서히 이동하는 코드) 이 코드에선 오류가 났었음.(이상한 위치로 갑자기 이동.)
+    #region Attributes
+
+    public Transform door;
+   
+    public Vector3 closedPosition = new Vector3(.51f, 3.63f, 0);
+    public Vector3 openedPosition = new Vector3(.51f, 7f, 0);
+
+    public float openSpeed = 5;
+
+    private bool open = false;
+
+    #endregion
+
+    #region MonoBehaviour API
+
+    private void Update()
+    {
+        if (open)
+        {
+            door.position = Vector3.Lerp(door.position,
+                openedPosition, Time.deltaTime * openSpeed);
+        } else
+        {
+            door.position = Vector3.Lerp(door.position,
+                closedPosition, Time.deltaTime * openSpeed);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            OpenDoor();
+           
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            CloseDoor();
+           
+        }
+    }
+
+    #endregion
+
+    public void CloseDoor()
+    {
+        open = false;
+    }
+
+    public void OpenDoor()
+    {
+        open = true;
+    }
+}
