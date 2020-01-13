@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public GameObject player;
+    public float followSpeed;
+    public float rotateSpeed;
+    public float zoomSpeed;
+    public float offsetX = 0f;
+    public float offsetY = 0f;
+    public float offsetZ = 0f;
+    private Camera maincamera;
+    Vector3 cameraPostition;
+    // Start is called before the first frame update
+    void Start()
+    {
+        maincamera = GetComponent<Camera>();
+    }
+
+    void Update()
+    {
+        cameraPostition.x = player.transform.position.x + offsetX;
+        cameraPostition.y = player.transform.position.y + offsetY;
+        cameraPostition.z = player.transform.position.z + offsetZ;
+
+        transform.position = Vector3.Lerp(transform.position, cameraPostition, followSpeed * Time.deltaTime);
+        Zoom();
+        Rotate();
+    }
+
+    void Zoom()
+    {
+        float distance = Input.GetAxis("Mouse ScrollWheel") * -1 * zoomSpeed;
+        if (distance != 0)
+            maincamera.fieldOfView += distance;
+    }
+    void Rotate()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            Vector3 rot = transform.root.eulerAngles;
+            rot.y += Input.GetAxis("Mouse X") * rotateSpeed;
+            rot.x += -1 * Input.GetAxis("Mouse Y") * rotateSpeed;
+            Quaternion q = Quaternion.Euler(rot);
+            q.z = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, q, 2f);
+        }
+    }
+}
