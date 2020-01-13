@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ArticleManager : MonoBehaviour
+{
+    public Canvas canvas;// Start is called before the first frame update
+
+    void Start()
+    {
+        canvas.gameObject.SetActive(false);
+    }
+
+
+
+   private void OnTriggerEnter(Collider col)
+    {
+
+        if (col.tag == "Player")
+        {
+            canvas.gameObject.SetActive(true);
+        }
+
+    }
+
+   private void OnTriggerExit(Collider col)
+
+    {
+        if (col.tag == "Player")
+
+        {
+            canvas.gameObject.SetActive(false);
+        }
+    }
+
+    public void MapOpen()
+    {
+        canvas.gameObject.SetActive(true);
+    }
+
+}
