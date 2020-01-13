@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HP_control : MonoBehaviour
+{
+
+    public Slider healthBarSlider;
+    public Text gameOverText;
+    //  public Button retryButton;
+    public Button restart_DEAD;
+
+    // private bool REtryButton = false;
+    private bool isGameOver = false;
+    // Use this for initialization
+    void Start()
+    {
+        gameOverText.gameObject.SetActive(false);
+        //   retryButton.enabled = false;
+        restart_DEAD.gameObject.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        //if (!isGameOver)
+        //transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * 10f. 0.0);
+        if(healthBarSlider.value == 0)
+        {
+            gameOverText.gameObject.SetActive(true);
+            restart_DEAD.gameObject.SetActive(true);
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.name == "boss" && healthBarSlider.value > 0)
+        {
+            healthBarSlider.value -= .011f;
+        }
+        if (healthBarSlider.value <= 0)
+        {
+            isGameOver = true;
+           // REtryButton = true;
+            gameOverText.enabled = true;
+            restart_DEAD.enabled = true;
+
+        }
+    }
+
+}
