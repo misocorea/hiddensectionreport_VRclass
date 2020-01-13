@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class open_popup : MonoBehaviour
+{
+/*    public Image Overlay;
+    public Image NextMap;
+    public Text Title;
+    public Button Yes;
+    public Button No;
+  */
+    public Canvas scene_change;
+
+    // Use this for initialization
+    void Start()
+    {
+        /*    Overlay.enabled = false;
+            NextMap.enabled = false;
+            Title.enabled = false;
+            Yes.enabled = false;
+            No.enabled = false;
+          */
+        scene_change.enabled = false;
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.Log("충돌");
+    }
+
+    
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.name == "MapCube")
+        {
+            // REtryButton = true;
+            /*    Overlay.enabled = true;
+                NextMap.enabled = true;
+                Title.enabled = true;
+                Yes.enabled = true;
+                No.enabled = true;
+                */
+
+            scene_change.enabled = true;
+        }
+
+    }
+    void OnTriggerExit(Collider other)
+    {
+        scene_change.enabled = false;
+    }
+
+}
+
